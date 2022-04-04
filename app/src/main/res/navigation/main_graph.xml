@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_graph"
+    app:startDestination="@id/dashboardScreen2">
+
+    <fragment
+        android:id="@+id/dashboardScreen2"
+        android:name="uz.example.chat.ui.DashboardScreen"
+        android:label="fragment_dashboard_screen"
+        tools:layout="@layout/fragment_dashboard_screen" >
+        <action
+            android:id="@+id/action_dashboardScreen2_to_contactsScreen"
+            app:destination="@id/contactsScreen" />
+        <action
+            android:id="@+id/action_dashboardScreen2_to_chatScreen2"
+            app:destination="@id/chatScreen2" />
+    </fragment>
+    <fragment
+        android:id="@+id/contactsScreen"
+        android:name="uz.example.chat.ui.ContactsScreen"
+        android:label="user_contacts_screen_fragment"
+        tools:layout="@layout/user_contacts_screen_fragment" >
+        <action
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/contactsScreen"
+            android:id="@+id/action_contactsScreen_to_chatScreen2"
+            app:destination="@id/chatScreen2" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatScreen2"
+        android:name="uz.example.chat.ui.ChatScreen"
+        android:label="fragment_chat_screen"
+        tools:layout="@layout/fragment_chat_screen" />
+</navigation>
