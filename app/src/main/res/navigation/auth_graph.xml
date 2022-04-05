@@ -2,17 +2,20 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_graph"
+    android:id="@+id/auth_graph"
     app:startDestination="@id/startScreen2">
 
     <fragment
         android:id="@+id/startScreen2"
         android:name="uz.example.chat.ui.StartScreen"
         android:label="start_screen_fragment"
-        tools:layout="@layout/start_screen_fragment" >
+        tools:layout="@layout/start_screen_fragment">
         <action
             android:id="@+id/action_startScreen2_to_registrationScreen2"
-            app:destination="@id/registrationScreen2" />
+            app:destination="@id/registrationScreen2"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_startScreen2_to_containerScreen"
             app:destination="@id/containerScreen"
@@ -24,28 +27,51 @@
         android:id="@+id/authScreen2"
         android:name="uz.example.chat.ui.AuthScreen"
         android:label="fragment_auth_screen"
-        tools:layout="@layout/fragment_auth_screen" >
+        tools:layout="@layout/fragment_auth_screen">
         <action
             android:id="@+id/action_authScreen2_to_registrationUserScreen2"
-            app:destination="@id/registrationUserScreen2" />
+            app:destination="@id/registrationUserScreen2"
+            app:popUpTo="@id/registrationScreen2"
+            app:popUpToInclusive="true">
+
+            <!--            <argument-->
+            <!--                app:nullable="false"-->
+            <!--                android:name="phoneNumber"-->
+            <!--                app:argType="string" />-->
+        </action>
+        <action
+            android:id="@+id/action_authScreen2_to_containerScreen"
+            app:destination="@id/containerScreen"
+            app:popUpTo="@id/authScreen2"
+            app:popUpToInclusive="true" />
+
     </fragment>
     <fragment
         android:id="@+id/registrationUserScreen2"
         android:name="uz.example.chat.ui.RegistrationUserScreen"
         android:label="fragment_registration_user_screen"
-        tools:layout="@layout/fragment_registration_user_screen" >
+        tools:layout="@layout/fragment_registration_user_screen">
         <action
             android:id="@+id/action_registrationUserScreen2_to_containerScreen"
-            app:destination="@id/containerScreen" />
+            app:destination="@id/containerScreen"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/registrationScreen2"
         android:name="uz.example.chat.ui.RegistrationScreen"
         android:label="fragment_registration_screen"
-        tools:layout="@layout/fragment_registration_screen" >
+        tools:layout="@layout/fragment_registration_screen">
+
         <action
             android:id="@+id/action_registrationScreen2_to_authScreen2"
             app:destination="@id/authScreen2" />
+
+        <!--        <argument-->
+        <!--            app:nullable="false"-->
+        <!--            android:name="phoneNumber"-->
+        <!--            app:argType="string" />-->
+
         <action
             android:id="@+id/action_registrationScreen2_to_registrationUserScreen2"
             app:destination="@id/registrationUserScreen2" />
@@ -54,5 +80,11 @@
         android:id="@+id/containerScreen"
         android:name="uz.example.chat.ui.ContainerScreen"
         android:label="fragment_container_screen"
-        tools:layout="@layout/fragment_container_screen" />
+        tools:layout="@layout/fragment_container_screen">
+        <action
+            android:id="@+id/action_containerScreen_to_registrationScreen2"
+            app:destination="@id/registrationScreen2"
+            app:popUpTo="@id/auth_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

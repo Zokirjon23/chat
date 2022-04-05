@@ -10,7 +10,7 @@ import uz.example.chat.databinding.ReceiverItemChatBinding
 import uz.example.chat.databinding.SenderItemChatBinding
 
 class ChatListAdapter(private var messages: ArrayList<MyMassage>) :
-    RecyclerView.Adapter<uz.example.chat.adapter.ChatListAdapter.MyHolder>() {
+    RecyclerView.Adapter<ChatListAdapter.MyHolder>() {
     private val RECEIVE_TYPE = 1
 
     override fun getItemViewType(position: Int): Int {

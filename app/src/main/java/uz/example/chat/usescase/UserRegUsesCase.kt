@@ -7,5 +7,8 @@ interface UserRegUsesCase {
     fun sendUserData(user: User)
 
     // send user registration data to the server
-    suspend fun sendUserDatas(user: User): Response<Boolean>
+//     fun sendUserDatas(user: User): Response<Boolean>
+
+    fun addUserToServer (user: User,onSuccess : (Unit) ->Unit,onError : (String) ->Unit)
+
 }

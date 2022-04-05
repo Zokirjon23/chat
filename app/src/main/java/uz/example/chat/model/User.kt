@@ -1,6 +1,7 @@
 package uz.example.chat.model
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
@@ -11,4 +12,7 @@ class User(
     var number: String,
     var name: String,
     var lastname: String = ""
-) : Serializable
+) : Serializable{
+    @Ignore
+    constructor() : this(0,"","","")
+}

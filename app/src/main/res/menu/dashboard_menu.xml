@@ -5,10 +5,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/userContactsScreen"
+            android:id="@+id/contactsScreen"
             android:title="@string/contacts" />
         <item
             android:id="@+id/settingScreen"
-            android:title="@string/contacts" />
+            android:title="@string/setting" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/logOut"
+            android:title="@string/log_out" />
     </group>
 </menu>

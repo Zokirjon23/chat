@@ -1,16 +1,17 @@
 package uz.example.chat.usescase.impl
 
+import android.content.ContentResolver
 import android.database.Cursor
+import android.provider.ContactsContract
+import android.util.Log
+import com.google.firebase.firestore.QuerySnapshot
+import uz.example.chat.model.User
+import uz.example.chat.repository.AuthRepository
 import uz.example.chat.usescase.ContactUsesCase
 import javax.inject.Inject
-import android.provider.ContactsContract
-import android.content.ContentResolver
-import uz.example.chat.model.User
-import uz.example.chat.repository.MainRepository
-import retrofit2.Response
 
 
-class ContactUsesCaseImpl @Inject constructor(private val repository: MainRepository) :
+class ContactUsesCaseImpl @Inject constructor(private val repository: AuthRepository) :
     ContactUsesCase {
 
     override fun readContact(getContentResolver: ContentResolver): ArrayList<User> {
@@ -34,17 +35,31 @@ class ContactUsesCaseImpl @Inject constructor(private val repository: MainReposi
         return list
     }
 
-    override suspend fun getAllContacts(users: ArrayList<User>): Response<List<User>> =
-        repository.sendAllContact(users)
+//    override  fun getAllContacts(users: ArrayList<User>): Response<List<User>> =
+//        repositorusers: ArrayList<User>y.sendAllContact(users)
 
-    override suspend fun getContacts() =
-         repository.getAppContacts()
+//    override  fun getContacts() =
+//         repository.getAppContacts()
 
-    override suspend fun insertContacts(list: List<User>) {
-//        repository.getUserContacts().collect {
-//            if (!list.containsAll(it)) {
-                repository.insertAppContacts(list)
-//            }
-//        }
+    override fun findContacts(contacts: ArrayList<User>, users: QuerySnapshot): ArrayList<User> {
+        val list = ArrayList<User>()
+        for (i in users) {
+           val user = i.toObject(User::class.java)
+            for(contact in contacts){
+                Log.d("VVV","user ${user.number}")
+                Log.d("VVV","contact ${contact.number}")
+                if (contact.number == user.number){
+                    Log.d("VVV","contact exsist ${contact.number}")
+                    list.add(contact)
+                    break
+                }
+            }
+        }
+        return list
     }
+
+    override fun getAllContactServer(
+        onSuccess: (QuerySnapshot) -> Unit,
+        onError: (String) -> Unit
+    ) = repository.getUsersServer(onSuccess, onError)
 }

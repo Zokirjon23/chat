@@ -1,11 +1,25 @@
 package uz.example.chat.usescase
 
+import com.google.firebase.auth.PhoneAuthOptions
+
 interface AuthScreenUsescase {
 
-//    fun checkCode(getCode: String,activity: Activity) : LiveData<Boolean>
-//    // check success and return boolean
-//
-//    fun startAuth(phone: String, context: Activity) : LiveData<Boolean>
-    // connect and get code and check and return boolean
+    fun sendSms(
+        builder: PhoneAuthOptions.Builder,
+        onSent: (String) -> Unit,
+        onVerify: (String) -> Unit,
+        onError: (String) -> Unit
+    )
+
+    fun checkCode(
+        smsCode : String,
+        onComplete: (Unit) -> Unit,
+        onError: (String) -> Unit
+    )
+
+    // check number exist in server
+    fun checkAuth(  phoneNumber: String,
+                    onSuccess: (Boolean) -> Unit,
+                    onError: (String) -> Unit)
 
 }

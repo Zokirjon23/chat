@@ -10,4 +10,6 @@ interface ContactViewModel {
     val permission : LiveData<Unit>
     fun onCreatedView(contentResolver: ContentResolver,net : Boolean)
     fun onBackClicked()
+    val error: LiveData<String>
+    val progressbar: LiveData<Boolean>
 }

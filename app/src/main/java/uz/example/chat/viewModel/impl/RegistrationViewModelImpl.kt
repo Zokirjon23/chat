@@ -1,5 +1,6 @@
 package uz.example.chat.viewModel.impl
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import uz.example.chat.viewModel.RegistrationViewModel
@@ -8,9 +9,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegistrationViewModelImpl @Inject constructor() : ViewModel(), RegistrationViewModel {
-    override val action: MutableLiveData<Unit> = MutableLiveData()
+    private val _navToAuth  = MutableLiveData<String>()
+    override val navToAuth: LiveData<String> = _navToAuth
 
-    override fun nextClicked() {
-        action.value = Unit
+    private val _error = MutableLiveData<String>()
+    override val error: LiveData<String>  = _error
+
+
+    override fun nextClicked(num : String) {
+        if (num.length < 18) {
+            _navToAuth.value = num
+
+        }else{
+            _error.value = "Enter number correctly"
+        }
     }
 }

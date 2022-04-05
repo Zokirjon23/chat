@@ -7,11 +7,24 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
+import uz.example.chat.ui.MainActivity
 
 
-fun AppCompatActivity.internetChangeListener(): LiveData<Boolean> {
+//fun Fragment.internetChangeListener(listener : (Boolean) -> Unit) {
+//    (requireActivity() as MainActivity).internetLister {
+//        listener(it)
+//    }
+//}
+
+fun AppCompatActivity.internetChangeListener() : LiveData<Boolean>{
     return InternetConnectionCheck(this)
 }
+
+fun Fragment.internetChangeListener() : LiveData<Boolean>{
+    return InternetConnectionCheck(requireContext())
+}
+
+
 fun Fragment.isNetworkAvailable(): Boolean {
     if (context == null) return false
     val connectivityManager = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

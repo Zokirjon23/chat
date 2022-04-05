@@ -1,6 +1,8 @@
 package uz.example.chat.db.local
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import uz.example.chat.model.User
 import javax.inject.Inject
 
 class MyPreferences @Inject constructor(private val shp: SharedPreferences) {
@@ -28,5 +30,21 @@ class MyPreferences @Inject constructor(private val shp: SharedPreferences) {
 
     fun setUserId(id: Long) {
         editor.putLong("UserId", id)
+    }
+
+    fun setCurrentAuth(user: User) {
+        val gson = Gson()
+        val json = gson.toJson(user)
+        editor.putString("user", json).apply()
+    }
+
+    fun getCurrentAuth(): User? {
+        val json = shp.getString("user", null)
+        val gson = Gson()
+        return gson.fromJson(json,User::class.java)
+    }
+
+    fun removeAuth(){
+        editor.remove("user").apply()
     }
 }

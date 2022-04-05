@@ -12,14 +12,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.permissionx.guolindev.PermissionX
+import dagger.hilt.android.AndroidEntryPoint
 import uz.example.chat.R
 import uz.example.chat.adapter.ContactListAdapter
 import uz.example.chat.databinding.UserContactsScreenFragmentBinding
 import uz.example.chat.model.User
 import uz.example.chat.util.isNetworkAvailable
 import uz.example.chat.viewModel.impl.ContactViewModelImpl
-import com.permissionx.guolindev.PermissionX
-import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ContactsScreen : Fragment(R.layout.user_contacts_screen_fragment) {
@@ -38,6 +38,16 @@ class ContactsScreen : Fragment(R.layout.user_contacts_screen_fragment) {
         viewModel.permission.observe(this, permissionObserver)
         viewModel.contacts.observe(this, contactObserver)
         viewModel.back.observe(this, back)
+        viewModel.progressbar.observe(this,progressObserver)
+        viewModel.error.observe(this,errorObserver)
+    }
+
+    private val progressObserver = Observer<Boolean> {
+        binding.progressBar.visibility = if (it) View.VISIBLE else View.GONE
+    }
+
+    private val errorObserver = Observer<String> {
+        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
     }
 
     private val permissionObserver = Observer<Unit> {
@@ -46,12 +56,12 @@ class ContactsScreen : Fragment(R.layout.user_contacts_screen_fragment) {
                 Manifest.permission.READ_CONTACTS
             )
             .request { allGranted, _, _ ->
-                Log.d("AAA",allGranted.toString())
+                Log.d("AAA", allGranted.toString())
 
                 if (allGranted) {
                     viewModel.onCreatedView(requireActivity().contentResolver, isNetworkAvailable())
                 } else {
-//                    requireActivity().onBackPressed()
+                    requireActivity().onBackPressed()
                 }
             }
     }
@@ -61,7 +71,6 @@ class ContactsScreen : Fragment(R.layout.user_contacts_screen_fragment) {
     }
 
     private val contactObserver = Observer<ArrayList<User>> {
-        Toast.makeText(requireContext(), it.size.toString(), Toast.LENGTH_SHORT).show()
         adapter = ContactListAdapter(it)
         binding.listView.adapter = adapter
         adapter.setItemOnClicked { user ->

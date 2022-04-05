@@ -18,11 +18,7 @@ class StartScreen : Fragment(R.layout.start_screen_fragment) {
 
     @SuppressLint("FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewModel.isRegistration.observe(this, isRegistration)
-        findNavController().navigate(R.id.action_startScreen2_to_registrationScreen2)
-
-        Log.d("AAA","Fragment Start")
-//        findNavController().navigate(R.id.action_startScreen2_to_containerScreen)
+        viewModel.isRegistration.observe(this, isRegistration)
     }
 
     private val isRegistration = Observer<Boolean> {
