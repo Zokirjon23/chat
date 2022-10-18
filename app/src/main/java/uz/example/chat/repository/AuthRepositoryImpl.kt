@@ -39,6 +39,7 @@ class AuthRepositoryImpl(
                     override fun onVerificationCompleted(credential: PhoneAuthCredential) {
                         auth.signInWithCredential(credential).addOnCompleteListener { p0 ->
                             if (p0.isSuccessful) {
+                                Log.d("RRR", "onVerificationCompleted: ${credential.smsCode}")
                                 onVerify(credential.smsCode!!)
                             } else {
                                 onError("Error")
@@ -112,7 +113,6 @@ class AuthRepositoryImpl(
                 }
         } catch (e: Exception) {
             onError(e.message!!)
-
         }
     }
 

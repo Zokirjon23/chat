@@ -2,6 +2,7 @@ package uz.example.chat.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -82,6 +83,7 @@ class AuthScreen : Fragment(R.layout.fragment_auth_screen) {
     }
 
     private val errorObserver = Observer<String>{
+        Log.d("VVV", "error:$it")
         Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
     }
 }
